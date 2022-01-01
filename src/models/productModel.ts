@@ -1,10 +1,10 @@
 import { Schema, model, Mongoose } from 'mongoose';
-import { ProductsCollection, user } from '../nameCollections';
+import { newsCollection, ProductsCollection, user } from '../nameCollections';
 
 export const SchemaProduct = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        path: user
+        ref: newsCollection
     },
     name: {
         type: String,
@@ -19,7 +19,7 @@ export const SchemaProduct = new Schema({
         type: String
     },
     priceEth: {
-        type: Number,
+        type: String,
         required: true
     },
     category: {

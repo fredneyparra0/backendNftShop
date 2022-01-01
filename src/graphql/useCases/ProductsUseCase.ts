@@ -1,7 +1,13 @@
 import { modelProduct } from "../../models/productModel";
 
-export async function getAllProducts () {
-    return await modelProduct.find({ isDeleted: false, isPrivate: false });
+export async function getAllProducts (nPage: number) {
+    if      (nPage === 1) return pagination(0);
+    else if (nPage === 2) return pagination(16);
+    else if (nPage === 3) return pagination(32);
+
+    async function pagination (skipN: number) {
+        return await modelProduct.find({ isDeleted: false, isPrivate: false }).skip(skipN).limit(16).populate('user');
+    } 
 }
 
 export async function getProductById (id: string) {

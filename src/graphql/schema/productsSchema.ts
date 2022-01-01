@@ -9,10 +9,10 @@ const ProductsTC = composeWithMongoose(modelProduct);
 
 ProductsTC.addResolver({
     name: 'getAllProducts',
-    args: {},
+    args: { nPage: "Int" },
     type: [ProductsTC],
     resolve: async ({ source, args, context }:any) => {
-        return await useCases.getAllProducts();
+        return await useCases.getAllProducts(args.nPage);
     }
 });
 
