@@ -1,15 +1,19 @@
 import http from 'http';
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import { ApolloServer, gql} from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { schema } from './schema';
+import dotenv from 'dotenv';
+dotenv.config();
 
 import { dbConnect } from './helpers/dbConnect';
 
 (async function () {
     const app = express();
     app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+    app.use(cors());
     const port = process.env.PORT || 3100;
     dbConnect();
 
