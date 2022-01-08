@@ -8,7 +8,12 @@ const UserTc = composeWithMongoose(modelUser);
 UserTc.addResolver({
     name: 'createUser',
     args: { data: "JSON" },
-    type: UserTc,
+    type: `
+        type userCreate {
+            message: String,
+            ok: Boolean
+        }
+    `,
     resolve: async ({source, args, context}:any) => {
         return await useCases.createUser(args.data);
     }
@@ -35,9 +40,9 @@ UserTc.addResolver({
 UserTc.addResolver({
     name: 'loginUser',
     args: { data: "JSON" },
-    type: `type loginUser {res: String }`,
+    type: `type loginUser {token: String }`,
     resolve: async ({ source, args, context}:any) => {
-        return { res: await useCases.loginUser(args.data) }
+        return { token: await useCases.loginUser(args.data) }
     }
 });
 

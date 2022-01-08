@@ -4,12 +4,25 @@ import { compareHash, generateHash } from '../../middleware/passEncrypt';
 import { modelUser } from '../../models/userModel';
 
 export async function createUser (data: any) {
-    const { pass } = data;
-    const passEncrypt = await generateHash(pass);
-    return await modelUser.create({
-        ...data,
-        pass: passEncrypt
-    });
+    try {
+        const { pass } = data;
+        const passEncrypt = await generateHash(pass);
+        await modelUser.create({
+            ...data,
+            pass: passEncrypt
+        });
+        return {
+            message: "User created successful",
+            ok: true
+        }
+    } catch (err: any) {
+        if (err) {
+            return {
+                message: err.message,
+                ok: false
+            }
+        }
+    }
 }
 
 export async function updatePersonalInformation (idUser: string, data: any) {

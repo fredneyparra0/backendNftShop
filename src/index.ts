@@ -5,6 +5,8 @@ import cors from 'cors';
 import { ApolloServer, gql} from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { schema } from './schema';
+import dotenv from 'dotenv';
+dotenv.config();
 
 import { dbConnect } from './helpers/dbConnect';
 
