@@ -11,7 +11,7 @@ UserTc.addResolver({
     type: `
         type userCreate {
             message: String,
-            ok: Boolean
+            error: Boolean
         }
     `,
     resolve: async ({source, args, context}:any) => {
@@ -40,7 +40,9 @@ UserTc.addResolver({
 UserTc.addResolver({
     name: 'loginUser',
     args: { data: "JSON" },
-    type: `type loginUser {token: String }`,
+    type: `type loginUser {
+        token: String 
+    }`,
     resolve: async ({ source, args, context}:any) => {
         return { token: await useCases.loginUser(args.data) }
     }

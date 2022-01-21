@@ -52,9 +52,24 @@ ProductsTC.addResolver({
     }
 });
 
+/**
+ * Filter of products 
+*/
+
+ProductsTC.addResolver({
+    name: "filterProduct",
+    args: { term: "String" },
+    type: [ProductsTC],
+    resolve: async ({source, args, contexr}:any) => {
+        return await useCases.filterProduct(args.term);
+    }
+});
+
+
 export const productsQuery = {
     getAllProducts: ProductsTC.getResolver('getAllProducts'),
-    getProductById: ProductsTC.getResolver('getProductById')
+    getProductById: ProductsTC.getResolver('getProductById'),
+    filterProduct: ProductsTC.getResolver('filterProduct')
 }
 
 export const productsMutation = {

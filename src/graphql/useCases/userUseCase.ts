@@ -7,19 +7,20 @@ export async function createUser (data: any) {
     try {
         const { pass } = data;
         const passEncrypt = await generateHash(pass);
-        await modelUser.create({
+        const createUser = await modelUser.create({
             ...data,
             pass: passEncrypt
         });
+        console.log('CreateUser --> ',createUser);
         return {
             message: "User created successful",
-            ok: true
+            error: false
         }
     } catch (err: any) {
         if (err) {
             return {
                 message: err.message,
-                ok: false
+                error: true
             }
         }
     }
@@ -42,9 +43,14 @@ export async function deleteUser (idUser: string) {
 }
 
 export async function loginUser (data: any) {
-    const { email, pass } = data;
-    const user: IUser[] = await modelUser.find({ email });
-    if (user.length > 0) {
+    try {
+        const { email, pass } = data;
+        const user: IUser[] = await modelUser.find({ email });
+        return generateToken()
+    } catch (err) {
+        return new Error('error authentication')
+    }
+    /* if (user.length > 0) {
         if (await compareHash(user[0].pass, pass)) {
             return generateToken()
         } else {
@@ -52,6 +58,6 @@ export async function loginUser (data: any) {
         }
     } else {
         return new Error('Server error please try again')
-    }
+    } */
 
 }

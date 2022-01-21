@@ -33,3 +33,9 @@ export async function updateProduct (data: any, idProduct: string, idUser: strin
         throw new Error('no authorized')
     }
 }
+
+export async function filterProduct (term: string) {
+    const productsFind = await modelProduct.find({ name : new RegExp(term.toLowerCase()) });
+
+    return productsFind;
+}
